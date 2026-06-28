@@ -3,16 +3,16 @@
 ========= */
 
 const INVITATION = {
-  brideName: "Sara",
-  groomName: "Mohamed",
-  eventDateISO: "2026-06-20T19:00:00+03:00",
-  eventDateText: "20 يونيو 2026",
-  eventTimeText: "07:00 مساءً",
-  venue: "اكتب اسم القاعة هنا",
-  address: "اكتب العنوان التفصيلي هنا",
-  mapLink: "https://maps.google.com/?q=Egypt",
-  whatsappNumber: "201009465981", // اكتب رقم واتساب بدون + مثال: 2010xxxxxxx
-  hashtag: "#Sara_Mohamed_Engagement"
+  brideName: "Menna Allah",
+  groomName: "Mostafa",
+  eventDateISO: "2026-07-21T19:00:00+03:00",
+  eventDateText: "21 July 2026",
+  eventTimeText: "07:00 PM",
+  venue: "Grand Palace",
+  address: "Grand Palace",
+  mapLink: "https://maps.google.com/?q=Grand%20Palace",
+  whatsappNumber: "201009465981",
+  hashtag: "#Mostafa_Menna_Allah_Engagement"
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -42,7 +42,7 @@ function updateCountdown() {
   const distance = target - now;
 
   if (distance <= 0) {
-    $("#countdown").innerHTML = `<div class="event-live"><strong>اليوم</strong><span>فرحتنا بدأت</span></div>`;
+    $("#countdown").innerHTML = `<div class="event-live"><strong>Today</strong><span>Our celebration has begun</span></div>`;
     return;
   }
 
@@ -89,7 +89,7 @@ musicBtn.addEventListener("click", async () => {
       musicBtn.classList.remove("playing");
     }
   } catch (error) {
-    alert("ضع ملف music.mp3 داخل مجلد assets لتشغيل الموسيقى.");
+    alert("Please add the music file inside the assets folder.");
   }
 });
 
@@ -120,8 +120,8 @@ function closeLightbox() {
 $("#copyAddressBtn").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(INVITATION.address);
-    $("#copyAddressBtn").textContent = "تم النسخ ✓";
-    setTimeout(() => ($("#copyAddressBtn").textContent = "نسخ العنوان"), 1500);
+    $("#copyAddressBtn").textContent = "Copied ✓";
+    setTimeout(() => ($("#copyAddressBtn").textContent = "Copy Address"), 1500);
   } catch {
     alert(INVITATION.address);
   }
@@ -135,10 +135,10 @@ $("#rsvpForm").addEventListener("submit", (event) => {
   const count = $("#guestCount").value;
   const note = $("#guestNote").value.trim();
 
-  const message = `أهلاً، أنا ${name}
-هحضر خطوبة ${INVITATION.brideName} و ${INVITATION.groomName}
-عدد الحضور: ${count}
-${note ? "رسالتي: " + note : ""}`;
+  const message = `Hello, I am ${name}
+I will attend the engagement of ${INVITATION.groomName} and ${INVITATION.brideName}
+Guests count: ${count}
+${note ? "My message: " + note : ""}`;
 
   const url = `https://wa.me/${INVITATION.whatsappNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
@@ -156,11 +156,11 @@ $("#calendarBtn").addEventListener("click", () => {
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "BEGIN:VEVENT",
-    `SUMMARY:Engagement - ${INVITATION.brideName} & ${INVITATION.groomName}`,
+    `SUMMARY:Engagement - ${INVITATION.groomName} & ${INVITATION.brideName}`,
     `DTSTART:${formatICS(start)}`,
     `DTEND:${formatICS(end)}`,
     `LOCATION:${INVITATION.address}`,
-    `DESCRIPTION:دعوة خطوبة ${INVITATION.brideName} و ${INVITATION.groomName}`,
+    `DESCRIPTION:Engagement invitation for ${INVITATION.groomName} and ${INVITATION.brideName}`,
     "END:VEVENT",
     "END:VCALENDAR"
   ].join("\n");
@@ -198,14 +198,3 @@ window.addEventListener("mousemove", (event) => {
   glow.style.left = event.clientX + "px";
   glow.style.top = event.clientY + "px";
 });
-
-/* Auto-play muted videos when visible */
-const videoObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    const video = entry.target;
-    if (entry.isIntersecting) video.play().catch(() => {});
-    else video.pause();
-  });
-}, { threshold: 0.4 });
-
-$$("video").forEach((video) => videoObserver.observe(video));
