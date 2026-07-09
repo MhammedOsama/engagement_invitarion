@@ -10,9 +10,9 @@ const INVITATION = {
   eventTimeText: "07:00 PM",
   venue: "Grand Palace",
   address: "Grand Palace",
-  mapLink: "https://maps.google.com/?q=Grand%20Palace",
-  whatsappNumber: "201009465981",
-  hashtag: "#Mostafa_Menna_Allah_Engagement"
+  mapLink: "https://maps.app.goo.gl/ivb4TQQzozyVSHh39?g_st=iw",
+  whatsappNumber: "201018906650",
+  hashtag: "#Mostafa_Menna_Allah_Engagement",
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -42,7 +42,8 @@ function updateCountdown() {
   const distance = target - now;
 
   if (distance <= 0) {
-    $("#countdown").innerHTML = `<div class="event-live"><strong>Today</strong><span>Our celebration has begun</span></div>`;
+    $("#countdown").innerHTML =
+      `<div class="event-live"><strong>Today</strong><span>الاحتفال بدأ</span></div>`;
     return;
   }
 
@@ -60,11 +61,14 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 /* Reveal on scroll */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add("visible");
-  });
-}, { threshold: 0.12 });
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
+    });
+  },
+  { threshold: 0.12 },
+);
 
 $$(".reveal").forEach((el) => observer.observe(el));
 
@@ -116,14 +120,20 @@ function closeLightbox() {
   document.body.classList.remove("no-scroll");
 }
 
-/* Copy address */
+/* Copy location */
 $("#copyAddressBtn").addEventListener("click", async () => {
   try {
-    await navigator.clipboard.writeText(INVITATION.address);
+    await navigator.clipboard.writeText(
+      `${INVITATION.address} - ${INVITATION.mapLink}`,
+    );
     $("#copyAddressBtn").textContent = "Copied ✓";
-    setTimeout(() => ($("#copyAddressBtn").textContent = "Copy Address"), 1500);
+    setTimeout(
+      () => ($("#copyAddressBtn").textContent = "Copy Location"),
+      1500,
+    );
   } catch {
-    alert(INVITATION.address);
+    alert(`${INVITATION.address}
+${INVITATION.mapLink}`);
   }
 });
 
@@ -136,7 +146,7 @@ $("#rsvpForm").addEventListener("submit", (event) => {
   const note = $("#guestNote").value.trim();
 
   const message = `Hello, I am ${name}
-I will attend the engagement of ${INVITATION.groomName} and ${INVITATION.brideName}
+سأحضر خطوبة ${INVITATION.groomName} و ${INVITATION.brideName}
 Guests count: ${count}
 ${note ? "My message: " + note : ""}`;
 
@@ -160,9 +170,9 @@ $("#calendarBtn").addEventListener("click", () => {
     `DTSTART:${formatICS(start)}`,
     `DTEND:${formatICS(end)}`,
     `LOCATION:${INVITATION.address}`,
-    `DESCRIPTION:Engagement invitation for ${INVITATION.groomName} and ${INVITATION.brideName}`,
+    `DESCRIPTION:Engagement invitation for ${INVITATION.groomName} and ${INVITATION.brideName} | Location: ${INVITATION.mapLink}`,
     "END:VEVENT",
-    "END:VCALENDAR"
+    "END:VCALENDAR",
   ].join("\n");
 
   const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
@@ -181,7 +191,8 @@ function createFloatItem() {
   item.textContent = icons[Math.floor(Math.random() * icons.length)];
   item.style.left = Math.random() * 100 + "vw";
   item.style.fontSize = Math.random() * 14 + 14 + "px";
-  item.style.color = Math.random() > 0.5 ? "rgba(196,154,90,.72)" : "rgba(216,166,166,.78)";
+  item.style.color =
+    Math.random() > 0.5 ? "rgba(124,58,237,.72)" : "rgba(56,189,248,.78)";
   item.style.animationDuration = Math.random() * 4 + 6 + "s";
   item.style.transform = `rotate(${Math.random() * 180}deg)`;
 
