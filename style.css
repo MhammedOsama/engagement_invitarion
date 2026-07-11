@@ -346,7 +346,11 @@ h2 {
 }
 
 .btn.soft {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(236, 72, 153, 0.18));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.22),
+    rgba(236, 72, 153, 0.18)
+  );
   color: var(--deep);
 }
 
@@ -798,6 +802,8 @@ h2 {
   color: var(--deep);
   line-height: 1.6;
   direction: ltr;
+  unicode-bidi: -webkit-isolate;
+  unicode-bidi: -moz-isolate;
   unicode-bidi: isolate;
 }
 
@@ -805,12 +811,14 @@ h2 {
   grid-column: 1 / -1;
   padding: 10px 0 4px;
 }
+.venue-box,
 .location-box {
   grid-column: 1 / -1;
   text-align: center;
   direction: ltr;
 }
 
+.venue-box strong,
 .location-box strong {
   display: block;
   font-size: 22px;
@@ -826,6 +834,8 @@ h2 {
   line-height: 1.7;
   font-weight: 600;
   direction: ltr;
+  unicode-bidi: -webkit-isolate;
+  unicode-bidi: -moz-isolate;
   unicode-bidi: isolate;
 }
 
@@ -1099,7 +1109,6 @@ footer {
   direction: ltr;
 }
 
-
 /* Youthful vibe touches */
 
 .mini-label {
@@ -1120,5 +1129,30 @@ footer {
 .detail-box,
 .dress-card,
 .feature-card {
-  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+}
+
+.rsvp-status {
+  min-height: 24px;
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.rsvp-status.success {
+  color: #15803d;
+}
+
+.rsvp-status.error {
+  color: #dc2626;
+}
+
+#rsvpSubmitBtn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
 }

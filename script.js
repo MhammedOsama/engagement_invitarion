@@ -12,9 +12,18 @@ const INVITATION = {
   address: "Gehan Road, Qewaisna Center",
   governorate: "Menofia Governorate",
   mapLink: "https://maps.app.goo.gl/ivb4TQQzozyVSHh39?g_st=iw",
-  whatsappNumber: "201009465981",
   hashtag: "#Mostafa_Menna_Allah_Engagement",
 };
+
+const SUPABASE_URL = "https://btuqdhchqzqhuwdzhhuk.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_E9Rj1YLPU4KkdhNq6UnHqg_7xZ0tw7-";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+);
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
@@ -149,7 +158,9 @@ const copyAddressBtn = $("#copyAddressBtn");
 if (copyAddressBtn) {
   copyAddressBtn.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(`${fullLocation} - ${INVITATION.mapLink}`);
+      await navigator.clipboard.writeText(
+        `${fullLocation} - ${INVITATION.mapLink}`,
+      );
       copyAddressBtn.textContent = "Copied ✓";
       setTimeout(() => (copyAddressBtn.textContent = "Copy Location"), 1500);
     } catch {
@@ -158,23 +169,58 @@ if (copyAddressBtn) {
   });
 }
 
-/* RSVP to WhatsApp */
+/* RSVP to Supabase Database */
 const rsvpForm = $("#rsvpForm");
+
 if (rsvpForm) {
-  rsvpForm.addEventListener("submit", (event) => {
+  rsvpForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const name = $("#guestName").value.trim();
-    const count = $("#guestCount").value;
+    const count = Number($("#guestCount").value);
     const note = $("#guestNote").value.trim();
 
-    const message = `Hey 👋 أنا ${name}
-هكون معاكم في Engagement Party بتاعة ${INVITATION.groomName} و ${INVITATION.brideName} 🎉
-Guests count: ${count}
-${note ? "Message: " + note : "See you there ✨"}`;
+    const submitBtn = $("#rsvpSubmitBtn");
+    const status = $("#rsvpStatus");
 
-    const url = `https://wa.me/${INVITATION.whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
+    if (name.length < 2) {
+      status.textContent = "اكتب اسم صحيح الأول.";
+      status.className = "rsvp-status error";
+      return;
+    }
+
+    try {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+
+      status.textContent = "";
+      status.className = "rsvp-status";
+
+      const { error } = await supabaseClient.from("rsvps").insert([
+        {
+          guest_name: name,
+          guest_count: count,
+          note: note || null,
+        },
+      ]);
+
+      if (error) throw error;
+
+      rsvpForm.reset();
+
+      status.textContent = "تم تسجيل حضورك بنجاح، مستنيينك معانا 🎉";
+
+      status.className = "rsvp-status success";
+    } catch (error) {
+      console.error("RSVP error:", error);
+
+      status.textContent = "حصلت مشكلة أثناء الإرسال، جرّب تاني.";
+
+      status.className = "rsvp-status error";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send RSVP ✨";
+    }
   });
 }
 
@@ -201,7 +247,9 @@ if (calendarBtn) {
       "END:VCALENDAR",
     ].join("\n");
 
-    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+    const blob = new Blob([icsContent], {
+      type: "text/calendar;charset=utf-8",
+    });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "engagement-invitation.ics";

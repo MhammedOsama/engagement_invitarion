@@ -58,7 +58,9 @@
         <div class="envelope-card reveal">
           <div class="envelope-flap"></div>
           <div class="invitation-card">
-            <span class="mini-label">Save the Date — مستنيينكم نولّع اليوم</span>
+            <span class="mini-label"
+              >Save the Date — مستنيينكم نولّع اليوم</span
+            >
             <h1 class="couple-title">
               <span class="name-line">Mostafa</span>
               <span class="amp-line">&</span>
@@ -92,7 +94,8 @@
           <span class="eyebrow">Save The Date</span>
           <h2>جهزوا نفسكم لليلة حلوة</h2>
           <p>
-            كل حاجة هنا: الـ Date، الـ Time، الـ Location، والـ Dress Code، وتأكيد الحضور في ثانية.
+            كل حاجة هنا: الـ Date، الـ Time، الـ Location، والـ Dress Code،
+            وتأكيد الحضور في ثانية.
           </p>
         </div>
       </section>
@@ -118,9 +121,7 @@
           <article class="timeline-item reveal">
             <span class="dot"></span>
             <h3>Next Chapter</h3>
-            <p>
-              دلوقتي بنبدأ chapter جديد، ووجودكم هو اللي هيخلي اليوم أحلى.
-            </p>
+            <p>دلوقتي بنبدأ chapter جديد، ووجودكم هو اللي هيخلي اليوم أحلى.</p>
           </article>
         </div>
       </section>
@@ -188,6 +189,10 @@
             <span>Time</span>
             <strong id="eventTimeText">09:00 PM</strong>
           </div>
+          <div class="detail-box venue-box">
+            <span>Venue</span>
+            <strong id="venueText">Grand Palace</strong>
+          </div>
           <div class="detail-box location-box">
             <span>Location</span>
             <strong id="addressText">Gehan Road, Qewaisna Center</strong>
@@ -203,7 +208,7 @@
               href="#"
               target="_blank"
               rel="noopener"
-               >Open Maps</a
+              >Open Maps</a
             >
             <button class="btn ghost" id="copyAddressBtn">Copy Location</button>
             <button class="btn soft" id="calendarBtn">Save Calendar</button>
@@ -217,7 +222,8 @@
           <span class="eyebrow">Dress Code</span>
           <h2>Dress Code يطلع جامد في الصور</h2>
           <p>
-            اختار لبسك براحتك، بس دي Palette شبابية وشيك وهتطلع حلوة جدًا في الصور.
+            اختار لبسك براحتك، بس دي Palette شبابية وشيك وهتطلع حلوة جدًا في
+            الصور.
           </p>
         </div>
 
@@ -259,13 +265,14 @@
           </article>
           <article class="feature-card reveal">
             <h3>Event Hashtag</h3>
-            <p>#Mostafa_Menna_Allah_Engagement<br />استخدموه في الصور والستوريز ✨</p>
+            <p>
+              #Mostafa_Menna_Allah_Engagement<br />استخدموه في الصور والستوريز
+              ✨
+            </p>
           </article>
           <article class="feature-card reveal">
             <h3>Photo Note</h3>
-            <p>
-              صور، اعمل mention، وخلينا نحتفظ بكل لحظة حلوة من اليوم.
-            </p>
+            <p>صور، اعمل mention، وخلينا نحتفظ بكل لحظة حلوة من اليوم.</p>
           </article>
         </div>
       </section>
@@ -301,14 +308,14 @@
 
           <label>
             Short Message
-            <textarea
-              id="guestNote"
-              placeholder="قولهم كلمة حلوة"></textarea>
+            <textarea id="guestNote" placeholder="قولهم كلمة حلوة"></textarea>
           </label>
 
-          <button class="btn primary wide" type="submit">
-            Confirm on WhatsApp 🚀
+          <button class="btn primary wide" id="rsvpSubmitBtn" type="submit">
+            Send RSVP ✨
           </button>
+
+          <p class="rsvp-status" id="rsvpStatus"></p>
         </form>
       </section>
     </main>
@@ -323,6 +330,7 @@
       <p>See you there ✨ Mostafa & Menna Allah</p>
     </footer>
 
-    <script src="script.js?v=3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js?v=4"></script>
   </body>
 </html>
